@@ -1,10 +1,17 @@
 {
   "name": "ai-factory",
   "displayName": "AI Factory",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A delivery line of eight role subagents that turn one feature description into a full specification pack, with wiring checks that fail loudly instead of guessing.",
-  "author": { "name": "Kristof Poszet" },
+  "author": {
+    "name": "Kristof Poszet"
+  },
   "homepage": "https://github.com/poszetkristof/ai-factory",
   "repository": "https://github.com/poszetkristof/ai-factory",
-  "keywords": ["specs", "subagents", "spec-driven", "architecture"]
+  "keywords": [
+    "specs",
+    "subagents",
+    "spec-driven",
+    "architecture"
+  ]
 }

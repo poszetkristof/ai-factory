@@ -5,11 +5,14 @@
 //   node scripts/check-wiring.mjs
 
 import { readFileSync, readdirSync, existsSync } from "node:fs"
-import { join } from "node:path"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
 
-// The line's own files come from the plugin. The run inputs come from the project being built.
+// The line's own files sit next to this script. Find them from here, not from
+// CLAUDE_PLUGIN_ROOT: that is substituted into command text but never exported to the process.
+// The run inputs come from the project being built.
 // --wiring-only skips the run-input check, for CI in this repo where no project is present.
-const FACTORY_ROOT = process.env.CLAUDE_PLUGIN_ROOT ?? process.cwd()
+const FACTORY_ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const PROJECT_ROOT = process.env.CLAUDE_PROJECT_DIR ?? process.cwd()
 const wiringOnly = process.argv.includes("--wiring-only")
 

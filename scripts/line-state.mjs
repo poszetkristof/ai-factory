@@ -4,10 +4,11 @@
 //   node scripts/line-state.mjs
 
 import { readFileSync, readdirSync, existsSync } from "node:fs"
-import { join } from "node:path"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
 
-// The line comes from the plugin; the state it reports is the project's.
-const FACTORY_ROOT = process.env.CLAUDE_PLUGIN_ROOT ?? process.cwd()
+// The line sits next to this script; the state it reports belongs to the project.
+const FACTORY_ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const PROJECT_ROOT = process.env.CLAUDE_PROJECT_DIR ?? process.cwd()
 const inProject = (p) => existsSync(join(PROJECT_ROOT, p))
 

@@ -3,11 +3,12 @@
 // The adapters are derived. Edit the slot or the map, then run this — never edit an adapter.
 
 import { readFileSync, writeFileSync, readdirSync } from "node:fs"
-import { join } from "node:path"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
 
-// Inside this repo both roots are the working directory. Installed as a plugin,
-// CLAUDE_PLUGIN_ROOT points at the plugin folder, where the line's own files live.
-const FACTORY_ROOT = process.env.CLAUDE_PLUGIN_ROOT ?? process.cwd()
+// The slot contracts and the agents sit next to this script, so resolve them from here.
+// CLAUDE_PLUGIN_ROOT is not exported to a plain command process, so it cannot be used.
+const FACTORY_ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const SLOT_DIR = join(FACTORY_ROOT, "factory/subagent-slots")
 const AGENT_DIR = join(FACTORY_ROOT, "agents")
 const MAP = join(FACTORY_ROOT, "factory/handoff-map.yaml")

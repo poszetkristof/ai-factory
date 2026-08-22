@@ -4,10 +4,11 @@
 //   node scripts/role-inputs.mjs 400-architecture
 
 import { readFileSync, existsSync, readdirSync } from "node:fs"
-import { join } from "node:path"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
 
-// The handoff map comes from the plugin; the inputs it checks for live in the project.
-const FACTORY_ROOT = process.env.CLAUDE_PLUGIN_ROOT ?? process.cwd()
+// The handoff map sits next to this script; the inputs it checks for live in the project.
+const FACTORY_ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const PROJECT_ROOT = process.env.CLAUDE_PROJECT_DIR ?? process.cwd()
 const MAP_PATH = join(FACTORY_ROOT, "factory/handoff-map.yaml")
 const REG_PATH = join(FACTORY_ROOT, "factory/subagent-registry.yaml")
