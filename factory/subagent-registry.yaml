@@ -1,0 +1,94 @@
+# SOURCE OF TRUTH — which role subagents exist, and what each one writes.
+#
+# Nothing else in this repo may declare a subagent. The adapters in .claude/agents/ are DERIVED
+# from the slot files named here: edit the slot, re-derive the adapter, never edit the adapter.
+#
+# Single-writer rule: every file below has exactly one subagent that writes it. If two slots claim
+# the same file, the wiring is broken — fix it here first.
+#
+# `tools:` is optional. Leave it out and the role gets files only. Add WebSearch and WebFetch only
+# where the role must look at the outside world, and its slot must say what it may look up.
+
+version: 1
+project: zamphora
+
+subagents:
+  - id: "100-consulting"
+    role: Consulting / SME
+    owns_folder: docs/100-consulting/
+    tools: Read, Write, Glob, Grep, WebSearch, WebFetch
+    writes:
+      - docs/100-consulting/00-context-brief.md
+      - docs/100-consulting/01-use-cases.md
+      - docs/100-consulting/02-decisions.md
+      - docs/100-consulting/03-market.md
+
+  - id: "200-product"
+    role: Product Management / BA
+    owns_folder: docs/200-product/
+    writes:
+      - docs/200-product/00-prd.md
+      - docs/200-product/01-user-stories.md
+      - docs/200-product/02-traceability.md
+
+  - id: "300-design"
+    role: Product Design
+    owns_folder: docs/300-design/
+    writes:
+      - docs/300-design/00-journey-map.md
+      - docs/300-design/01-CONTEXT.md
+      - docs/300-design/02-SPEC.md
+      - docs/300-design/03-tokens.md
+
+  - id: "400-architecture"
+    role: Architecture
+    owns_folder: docs/400-architecture/
+    tools: Read, Write, Glob, Grep, WebSearch, WebFetch
+    writes:
+      - docs/400-architecture/00-options.md
+      - docs/400-architecture/01-context.mmd
+      - docs/400-architecture/02-containers.mmd
+      - docs/400-architecture/03-flow-plant-check.md
+      - docs/400-architecture/05-patterns.md
+      - docs/400-architecture/06-nfrs.md
+      - docs/400-architecture/07-adversarial.md
+      - docs/ADR/*.md
+
+  - id: "500-engineering"
+    role: Engineering
+    owns_folder: docs/500-engineering/
+    writes:
+      - docs/500-engineering/00-conventions.md
+      - docs/500-engineering/01-contracts.md
+      - docs/500-engineering/02-web-spec.md
+      - docs/500-engineering/03-api-spec.md
+      - docs/context/stack.md
+
+  - id: "800-infra"
+    role: Infrastructure / Ops
+    owns_folder: docs/800-infra/
+    tools: Read, Write, Glob, Grep, WebSearch, WebFetch
+    writes:
+      - docs/800-infra/00-environments.md
+      - docs/800-infra/01-iac-plan.md
+      - docs/800-infra/02-cost-guardrails.md
+      - docs/800-infra/03-observability.md
+      - docs/800-infra/04-ci-cd.md
+
+  - id: "900-security"
+    role: Security
+    owns_folder: docs/900-security/
+    tools: Read, Write, Glob, Grep, WebSearch, WebFetch
+    writes:
+      - docs/900-security/00-assets.md
+      - docs/900-security/01-threats.md
+      - docs/900-security/02-mitigations.md
+      - docs/900-security/03-evidence.md
+
+  - id: "600-qa"
+    role: Quality Assurance
+    owns_folder: docs/600-qa/
+    writes:
+      - docs/600-qa/00-test-plan.md
+      - docs/600-qa/01-test-cases.md
+      - docs/600-qa/02-ai-evals.md

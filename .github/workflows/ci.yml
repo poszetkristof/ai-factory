@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # This repo is the line itself. There is no application code and no package.json,
+  # so the only thing to check is that the wiring is sound and the agents are current.
+  factory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # --wiring-only skips the run-input check. Run inputs live in the project being
+      # built, not here, so they are correctly absent in this repo.
+      - name: Wiring is sound - single writer, no dangling reads, correct order
+        run: node scripts/check-wiring.mjs --wiring-only
+
+      - name: Role adapters match their source contracts
+        run: |
+          node scripts/derive-agents.mjs
+          git diff --exit-code -- agents \
+            || { echo "::error::agents/ is out of date. Run node scripts/derive-agents.mjs and commit."; exit 1; }
+
+      - name: Plugin manifest is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('.claude-plugin/plugin.json','utf8'))"
+
+      - name: Hook config is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('hooks/hooks.json','utf8'))"

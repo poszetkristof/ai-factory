@@ -1,0 +1,152 @@
+# SOURCE OF TRUTH — the order the line runs in, and who may read whose output.
+#
+# A subagent reads ONLY the files listed under its `reads:` key. That is the point: a gap upstream
+# becomes a visible stop, not a silently invented guess.
+#
+# Run order is ROLE order, not numeric order. Infra runs before Security because Security reviews
+# the infra surface. QA runs last because a real test plan needs the engineering, infra and
+# security outputs already written.
+
+version: 1
+
+execution_order:
+  - "100-consulting"
+  - "200-product"
+  - "300-design"
+  - "400-architecture"
+  - "500-engineering"
+  - "800-infra"
+  - "900-security"
+  - "600-qa"
+
+# Every run starts from the same two files. They are the only context that is not produced by
+# an upstream subagent.
+run_inputs:
+  - factory/feature.md
+  - initial-plan.md
+
+reads:
+  "100-consulting":
+    - factory/feature.md
+    - initial-plan.md
+
+  "200-product":
+    - factory/feature.md
+    - docs/100-consulting/00-context-brief.md
+    - docs/100-consulting/01-use-cases.md
+    - docs/100-consulting/03-market.md
+
+  "300-design":
+    - factory/feature.md
+    - docs/100-consulting/00-context-brief.md
+    - docs/200-product/00-prd.md
+    - docs/200-product/01-user-stories.md
+
+  "400-architecture":
+    - factory/feature.md
+    - docs/100-consulting/00-context-brief.md
+    - docs/200-product/00-prd.md
+    - docs/200-product/01-user-stories.md
+    - docs/300-design/01-CONTEXT.md
+    - docs/300-design/02-SPEC.md
+
+  "500-engineering":
+    - docs/200-product/01-user-stories.md
+    - docs/300-design/02-SPEC.md
+    - docs/300-design/03-tokens.md
+    - docs/400-architecture/00-options.md
+    - docs/400-architecture/02-containers.mmd
+    - docs/400-architecture/06-nfrs.md
+    - docs/ADR/
+
+  "800-infra":
+    - docs/400-architecture/00-options.md
+    - docs/400-architecture/02-containers.mmd
+    - docs/400-architecture/06-nfrs.md
+    - docs/500-engineering/03-api-spec.md
+    - docs/ADR/
+
+  "900-security":
+    - docs/400-architecture/02-containers.mmd
+    - docs/400-architecture/03-flow-plant-check.md
+    - docs/500-engineering/01-contracts.md
+    - docs/500-engineering/03-api-spec.md
+    - docs/800-infra/00-environments.md
+    - docs/800-infra/01-iac-plan.md
+
+  "600-qa":
+    - docs/200-product/01-user-stories.md
+    - docs/300-design/02-SPEC.md
+    - docs/400-architecture/06-nfrs.md
+    - docs/500-engineering/02-web-spec.md
+    - docs/500-engineering/03-api-spec.md
+    - docs/800-infra/04-ci-cd.md
+    - docs/900-security/02-mitigations.md
+
+# Named edges. One line per file crossing from one subagent to the next. This is the list the seam
+# review walks: each edge is marked clean / under-supply / over-supply / missing / routing.
+edges:
+  - { from: "100-consulting", to: "200-product", file: docs/100-consulting/00-context-brief.md }
+  - { from: "100-consulting", to: "200-product", file: docs/100-consulting/01-use-cases.md }
+  - { from: "100-consulting", to: "200-product", file: docs/100-consulting/03-market.md }
+  - { from: "100-consulting", to: "300-design", file: docs/100-consulting/00-context-brief.md }
+  - { from: "100-consulting", to: "400-architecture", file: docs/100-consulting/00-context-brief.md }
+  - { from: "200-product", to: "300-design", file: docs/200-product/00-prd.md }
+  - { from: "200-product", to: "300-design", file: docs/200-product/01-user-stories.md }
+  - { from: "200-product", to: "400-architecture", file: docs/200-product/00-prd.md }
+  - { from: "200-product", to: "400-architecture", file: docs/200-product/01-user-stories.md }
+  - { from: "200-product", to: "500-engineering", file: docs/200-product/01-user-stories.md }
+  - { from: "200-product", to: "600-qa", file: docs/200-product/01-user-stories.md }
+  - { from: "300-design", to: "400-architecture", file: docs/300-design/01-CONTEXT.md }
+  - { from: "300-design", to: "400-architecture", file: docs/300-design/02-SPEC.md }
+  - { from: "300-design", to: "500-engineering", file: docs/300-design/02-SPEC.md }
+  - { from: "300-design", to: "500-engineering", file: docs/300-design/03-tokens.md }
+  - { from: "300-design", to: "600-qa", file: docs/300-design/02-SPEC.md }
+  - { from: "400-architecture", to: "500-engineering", file: docs/400-architecture/00-options.md }
+  - { from: "400-architecture", to: "500-engineering", file: docs/400-architecture/02-containers.mmd }
+  - { from: "400-architecture", to: "500-engineering", file: docs/400-architecture/06-nfrs.md }
+  - { from: "400-architecture", to: "800-infra", file: docs/400-architecture/00-options.md }
+  - { from: "400-architecture", to: "800-infra", file: docs/400-architecture/02-containers.mmd }
+  - { from: "400-architecture", to: "800-infra", file: docs/400-architecture/06-nfrs.md }
+  - { from: "400-architecture", to: "900-security", file: docs/400-architecture/02-containers.mmd }
+  - { from: "400-architecture", to: "900-security", file: docs/400-architecture/03-flow-plant-check.md }
+  - { from: "400-architecture", to: "600-qa", file: docs/400-architecture/06-nfrs.md }
+  - { from: "500-engineering", to: "800-infra", file: docs/500-engineering/03-api-spec.md }
+  - { from: "500-engineering", to: "900-security", file: docs/500-engineering/01-contracts.md }
+  - { from: "500-engineering", to: "900-security", file: docs/500-engineering/03-api-spec.md }
+  - { from: "500-engineering", to: "600-qa", file: docs/500-engineering/02-web-spec.md }
+  - { from: "500-engineering", to: "600-qa", file: docs/500-engineering/03-api-spec.md }
+  - { from: "800-infra", to: "900-security", file: docs/800-infra/00-environments.md }
+  - { from: "800-infra", to: "900-security", file: docs/800-infra/01-iac-plan.md }
+  - { from: "800-infra", to: "600-qa", file: docs/800-infra/04-ci-cd.md }
+  - { from: "900-security", to: "600-qa", file: docs/900-security/02-mitigations.md }
+
+human_gate_policy:
+  # The line stops and a person decides. Record the gate, do not route around it.
+  stop_when:
+    - a subagent tries to accept a risk without named human approval
+    - a subagent chooses scope beyond factory/feature.md
+    - a subagent asks for secrets, credentials, client-confidential or production data
+    - a subagent needs a policy, compliance, budget or release decision
+    - a subagent proposes spending money or deploying anything
+    - a subagent proposes a new tool the model may call
+    - a subagent's output would contradict an accepted ADR
+    # The "lethal trifecta". Any two are usually fine; all three together are the dangerous shape.
+    - a subagent holds private project data, reads untrusted outside content, and has a way to send
+      data out
+
+  # Recorded in factory/runs/<slug>/human-gates.md with one of these statuses.
+  statuses:
+    - recorded-open # gate fired, decision still with the human, line continued on a stated assumption
+    - hard-stop # gate fired, line cannot continue until answered
+    - paused-approved # human answered, line resumed
+    - paused-blocked # human answered "no", scope changed
+    - missed # gate should have fired and did not — a finding, same weight as a broken seam
+    - n/a # gate does not apply to this subagent
+
+seam_labels:
+  - clean # the next subagent got what it needed
+  - under-supply # got less than it needed
+  - over-supply # got more than it needed; scope crept
+  - missing # the file was not there
+  - routing # went to the wrong subagent

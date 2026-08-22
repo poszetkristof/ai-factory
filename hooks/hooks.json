@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptExpansion": [
+      {
+        "matcher": "code-review",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/cache-branch-diff.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
