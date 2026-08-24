@@ -1,7 +1,7 @@
 {
   "name": "ai-factory",
   "displayName": "AI Factory",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A delivery line of eight role subagents that turn one feature description into a full specification pack, with wiring checks that fail loudly instead of guessing.",
   "author": {
     "name": "Kristof Poszet"

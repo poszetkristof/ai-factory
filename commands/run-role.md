@@ -7,20 +7,26 @@ Run one slot of the delivery line.
 
 SLOT: $1
 
-!`node "${CLAUDE_PLUGIN_ROOT}/scripts/role-inputs.mjs" $1 2>&1 || true`
-
 ## How to run it
 
-1. **Read the slot contract** at `${CLAUDE_PLUGIN_ROOT}/factory/subagent-slots/$1.md`. It is the source of truth. The
-   adapter in `${CLAUDE_PLUGIN_ROOT}/agents/$1.md` is generated from it.
-2. **Check the inputs above.** Anything `MISSING` is a seam, not a reason to improvise. If a
-   required input is absent, record it in `factory/runs/<slug>/seam-ledger.md` and stop.
-3. **Dispatch the subagent** named `$1`, in its own context. It reads only the files listed above
-   and writes only the files listed above.
+1. **List the declared inputs first.** Run this yourself, putting the slot id in place of
+   `<slot-id>`:
+
+   ```bash
+   node "${CLAUDE_PLUGIN_ROOT}/scripts/role-inputs.mjs" <slot-id>
+   ```
+
+   With no slot id it prints every slot in run order. Anything marked `MISSING` is a seam, not a
+   reason to improvise. If a required input is absent, record it in
+   `factory/runs/<slug>/seam-ledger.md` and stop.
+2. **Read the slot contract** at `${CLAUDE_PLUGIN_ROOT}/factory/subagent-slots/<slot-id>.md`. It is
+   the source of truth. The adapter in `${CLAUDE_PLUGIN_ROOT}/agents/<slot-id>.md` is generated
+   from it.
+3. **Dispatch the subagent** named `<slot-id>`, in its own context. It reads only the files the
+   script listed, and writes only the files it owns.
 4. **Do not hand-feed context.** If the subagent asks for a fact that is not in its inputs, that is
    the finding. Record the seam. Do not answer with a new fact.
 5. **Log it** — one row in the table in `factory/runs/<slug>/run-record.md`.
 6. **Stop and report.** One slot per invocation. The next slot is a separate decision.
 
-If `$1` is empty the output above lists the slots in run order. Run `/start` to see which of them
-already have their outputs on disk.
+Run `/ai-factory:start` to see which slots already have their outputs on disk.
