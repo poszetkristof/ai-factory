@@ -36,18 +36,18 @@ subagents:
     role: Product Management / BA
     owns_folder: docs/200-product/
     writes:
-      - docs/200-product/{feature}/00-prd.md
-      - docs/200-product/{feature}/01-user-stories.md
-      - docs/200-product/{feature}/02-traceability.md
+      - "docs/200-product/{feature}/00-prd.md"
+      - "docs/200-product/{feature}/01-user-stories.md"
+      - "docs/200-product/{feature}/02-traceability.md"
 
   # The screens are per feature. The tokens are the product's, written once and extended after.
   - id: "300-design"
     role: Product Design
     owns_folder: docs/300-design/
     writes:
-      - docs/300-design/{feature}/00-journey-map.md
-      - docs/300-design/{feature}/01-CONTEXT.md
-      - docs/300-design/{feature}/02-SPEC.md
+      - "docs/300-design/{feature}/00-journey-map.md"
+      - "docs/300-design/{feature}/01-CONTEXT.md"
+      - "docs/300-design/{feature}/02-SPEC.md"
       - docs/300-design/03-tokens.md
 
   # The system is one system: options, diagrams, patterns, NFRs and ADRs are extended, not replaced.
@@ -62,8 +62,8 @@ subagents:
       - docs/400-architecture/02-containers.mmd
       - docs/400-architecture/05-patterns.md
       - docs/400-architecture/06-nfrs.md
-      - docs/400-architecture/{feature}/03-flow.md
-      - docs/400-architecture/{feature}/07-adversarial.md
+      - "docs/400-architecture/{feature}/03-flow.md"
+      - "docs/400-architecture/{feature}/07-adversarial.md"
       - docs/ADR/*.md
 
   - id: "500-engineering"
@@ -102,6 +102,6 @@ subagents:
     role: Quality Assurance
     owns_folder: docs/600-qa/
     writes:
-      - docs/600-qa/{feature}/00-test-plan.md
-      - docs/600-qa/{feature}/01-test-cases.md
-      - docs/600-qa/{feature}/02-ai-evals.md
+      - "docs/600-qa/{feature}/00-test-plan.md"
+      - "docs/600-qa/{feature}/01-test-cases.md"
+      - "docs/600-qa/{feature}/02-ai-evals.md"

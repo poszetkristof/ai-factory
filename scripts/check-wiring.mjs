@@ -95,7 +95,7 @@ for (const id of ids) {
   for (const line of map.slice(anchor + 1).split("\n").slice(1)) {
     if (line.trim() === "" || line.trim().startsWith("#")) continue
     if (!line.startsWith("    - ")) break
-    reads.push(line.slice(6).trim())
+    reads.push(line.slice(6).trim().replace(/^"|"$/g, ""))
   }
   for (const r of reads) {
     if (runInputs.includes(r)) continue
@@ -120,7 +120,7 @@ for (const id of ids) {
     for (const line of map.slice(anchor + 1).split("\n").slice(1)) {
       if (line.trim() === "" || line.trim().startsWith("#")) continue
       if (!line.startsWith("    - ")) break
-      reads.push(line.slice(6).trim())
+      reads.push(line.slice(6).trim().replace(/^"|"$/g, ""))
     }
   }
   const usesSlug = [...writes, ...reads].some((p) => p.includes("{feature}"))
@@ -130,7 +130,9 @@ for (const id of ids) {
 }
 
 // 6 — every declared edge is real in both directions
-for (const m of map.matchAll(/- \{ from: "(.+?)", to: "(.+?)", file: (.+?) \}/g)) {
+// The file value is quoted because a path may contain {feature}, and inside a flow map { and }
+// are YAML indicators — unquoted, the parser reads a nested map and the rest of the file breaks.
+for (const m of map.matchAll(/- \{ from: "(.+?)", to: "(.+?)", file: "(.+?)" \}/g)) {
   const [, from, to, file] = m
   if (produced(file) !== from) note(`edge ${from} → ${to}: "${file}" is written by ${produced(file) ?? "nobody"}`)
   const anchor = map.indexOf(`\n  "${to}":`)

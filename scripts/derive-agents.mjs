@@ -38,7 +38,7 @@ function readsFor(mapText, id) {
   for (const line of rest) {
     if (line.trim() === "" || line.trim().startsWith("#")) continue
     if (!line.startsWith("    - ")) break
-    out.push(line.slice(6).trim())
+    out.push(line.slice(6).trim().replace(/^"|"$/g, ""))
   }
   return out
 }

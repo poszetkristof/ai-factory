@@ -47,7 +47,7 @@ const reads = []
 for (const line of map.slice(anchor + 1).split("\n").slice(1)) {
   if (line.trim() === "" || line.trim().startsWith("#")) continue
   if (!line.startsWith("    - ")) break
-  reads.push(line.slice(6).trim())
+  reads.push(line.slice(6).trim().replace(/^"|"$/g, ""))
 }
 
 const present = (rel) => {
@@ -86,7 +86,7 @@ for (const line of reg.slice(at).split("\n").slice(1)) {
     if (writes.length > 0) break
     continue
   }
-  writes.push(line.slice(8).trim())
+  writes.push(line.slice(8).trim().replace(/^"|"$/g, ""))
 }
 console.log(`\nand writes only:`)
 for (const w of writes) console.log(`  ${resolve(w)}`)

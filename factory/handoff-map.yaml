@@ -46,22 +46,22 @@ reads:
   "300-design":
     - factory/feature.md
     - docs/100-consulting/00-context-brief.md
-    - docs/200-product/{feature}/00-prd.md
-    - docs/200-product/{feature}/01-user-stories.md
+    - "docs/200-product/{feature}/00-prd.md"
+    - "docs/200-product/{feature}/01-user-stories.md"
 
   "400-architecture":
     - factory/feature.md
     - docs/100-consulting/00-context-brief.md
-    - docs/200-product/{feature}/00-prd.md
-    - docs/200-product/{feature}/01-user-stories.md
-    - docs/300-design/{feature}/01-CONTEXT.md
-    - docs/300-design/{feature}/02-SPEC.md
+    - "docs/200-product/{feature}/00-prd.md"
+    - "docs/200-product/{feature}/01-user-stories.md"
+    - "docs/300-design/{feature}/01-CONTEXT.md"
+    - "docs/300-design/{feature}/02-SPEC.md"
 
   "500-engineering":
     # Needed for the run slug: this role writes flat files but reads per-feature ones.
     - factory/feature.md
-    - docs/200-product/{feature}/01-user-stories.md
-    - docs/300-design/{feature}/02-SPEC.md
+    - "docs/200-product/{feature}/01-user-stories.md"
+    - "docs/300-design/{feature}/02-SPEC.md"
     - docs/300-design/03-tokens.md
     - docs/400-architecture/00-options.md
     - docs/400-architecture/02-containers.mmd
@@ -79,7 +79,7 @@ reads:
     # Needed for the run slug: this role writes flat files but reads the feature's timed flow.
     - factory/feature.md
     - docs/400-architecture/02-containers.mmd
-    - docs/400-architecture/{feature}/03-flow.md
+    - "docs/400-architecture/{feature}/03-flow.md"
     - docs/500-engineering/01-contracts.md
     - docs/500-engineering/03-api-spec.md
     - docs/800-infra/00-environments.md
@@ -88,8 +88,8 @@ reads:
   "600-qa":
     # Needed for the run slug, because every file this role writes is per-feature.
     - factory/feature.md
-    - docs/200-product/{feature}/01-user-stories.md
-    - docs/300-design/{feature}/02-SPEC.md
+    - "docs/200-product/{feature}/01-user-stories.md"
+    - "docs/300-design/{feature}/02-SPEC.md"
     - docs/400-architecture/06-nfrs.md
     - docs/500-engineering/02-web-spec.md
     - docs/500-engineering/03-api-spec.md
@@ -99,40 +99,40 @@ reads:
 # Named edges. One line per file crossing from one subagent to the next. This is the list the seam
 # review walks: each edge is marked clean / under-supply / over-supply / missing / routing.
 edges:
-  - { from: "100-consulting", to: "200-product", file: docs/100-consulting/00-context-brief.md }
-  - { from: "100-consulting", to: "200-product", file: docs/100-consulting/01-use-cases.md }
-  - { from: "100-consulting", to: "200-product", file: docs/100-consulting/03-market.md }
-  - { from: "100-consulting", to: "300-design", file: docs/100-consulting/00-context-brief.md }
-  - { from: "100-consulting", to: "400-architecture", file: docs/100-consulting/00-context-brief.md }
-  - { from: "200-product", to: "300-design", file: docs/200-product/{feature}/00-prd.md }
-  - { from: "200-product", to: "300-design", file: docs/200-product/{feature}/01-user-stories.md }
-  - { from: "200-product", to: "400-architecture", file: docs/200-product/{feature}/00-prd.md }
-  - { from: "200-product", to: "400-architecture", file: docs/200-product/{feature}/01-user-stories.md }
-  - { from: "200-product", to: "500-engineering", file: docs/200-product/{feature}/01-user-stories.md }
-  - { from: "200-product", to: "600-qa", file: docs/200-product/{feature}/01-user-stories.md }
-  - { from: "300-design", to: "400-architecture", file: docs/300-design/{feature}/01-CONTEXT.md }
-  - { from: "300-design", to: "400-architecture", file: docs/300-design/{feature}/02-SPEC.md }
-  - { from: "300-design", to: "500-engineering", file: docs/300-design/{feature}/02-SPEC.md }
-  - { from: "300-design", to: "500-engineering", file: docs/300-design/03-tokens.md }
-  - { from: "300-design", to: "600-qa", file: docs/300-design/{feature}/02-SPEC.md }
-  - { from: "400-architecture", to: "500-engineering", file: docs/400-architecture/00-options.md }
-  - { from: "400-architecture", to: "500-engineering", file: docs/400-architecture/02-containers.mmd }
-  - { from: "400-architecture", to: "500-engineering", file: docs/400-architecture/06-nfrs.md }
-  - { from: "400-architecture", to: "800-infra", file: docs/400-architecture/00-options.md }
-  - { from: "400-architecture", to: "800-infra", file: docs/400-architecture/02-containers.mmd }
-  - { from: "400-architecture", to: "800-infra", file: docs/400-architecture/06-nfrs.md }
-  - { from: "400-architecture", to: "900-security", file: docs/400-architecture/02-containers.mmd }
-  - { from: "400-architecture", to: "900-security", file: docs/400-architecture/{feature}/03-flow.md }
-  - { from: "400-architecture", to: "600-qa", file: docs/400-architecture/06-nfrs.md }
-  - { from: "500-engineering", to: "800-infra", file: docs/500-engineering/03-api-spec.md }
-  - { from: "500-engineering", to: "900-security", file: docs/500-engineering/01-contracts.md }
-  - { from: "500-engineering", to: "900-security", file: docs/500-engineering/03-api-spec.md }
-  - { from: "500-engineering", to: "600-qa", file: docs/500-engineering/02-web-spec.md }
-  - { from: "500-engineering", to: "600-qa", file: docs/500-engineering/03-api-spec.md }
-  - { from: "800-infra", to: "900-security", file: docs/800-infra/00-environments.md }
-  - { from: "800-infra", to: "900-security", file: docs/800-infra/01-iac-plan.md }
-  - { from: "800-infra", to: "600-qa", file: docs/800-infra/04-ci-cd.md }
-  - { from: "900-security", to: "600-qa", file: docs/900-security/02-mitigations.md }
+  - { from: "100-consulting", to: "200-product", file: "docs/100-consulting/00-context-brief.md" }
+  - { from: "100-consulting", to: "200-product", file: "docs/100-consulting/01-use-cases.md" }
+  - { from: "100-consulting", to: "200-product", file: "docs/100-consulting/03-market.md" }
+  - { from: "100-consulting", to: "300-design", file: "docs/100-consulting/00-context-brief.md" }
+  - { from: "100-consulting", to: "400-architecture", file: "docs/100-consulting/00-context-brief.md" }
+  - { from: "200-product", to: "300-design", file: "docs/200-product/{feature}/00-prd.md" }
+  - { from: "200-product", to: "300-design", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "200-product", to: "400-architecture", file: "docs/200-product/{feature}/00-prd.md" }
+  - { from: "200-product", to: "400-architecture", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "200-product", to: "500-engineering", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "200-product", to: "600-qa", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "300-design", to: "400-architecture", file: "docs/300-design/{feature}/01-CONTEXT.md" }
+  - { from: "300-design", to: "400-architecture", file: "docs/300-design/{feature}/02-SPEC.md" }
+  - { from: "300-design", to: "500-engineering", file: "docs/300-design/{feature}/02-SPEC.md" }
+  - { from: "300-design", to: "500-engineering", file: "docs/300-design/03-tokens.md" }
+  - { from: "300-design", to: "600-qa", file: "docs/300-design/{feature}/02-SPEC.md" }
+  - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/00-options.md" }
+  - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/02-containers.mmd" }
+  - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/06-nfrs.md" }
+  - { from: "400-architecture", to: "800-infra", file: "docs/400-architecture/00-options.md" }
+  - { from: "400-architecture", to: "800-infra", file: "docs/400-architecture/02-containers.mmd" }
+  - { from: "400-architecture", to: "800-infra", file: "docs/400-architecture/06-nfrs.md" }
+  - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/02-containers.mmd" }
+  - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/{feature}/03-flow.md" }
+  - { from: "400-architecture", to: "600-qa", file: "docs/400-architecture/06-nfrs.md" }
+  - { from: "500-engineering", to: "800-infra", file: "docs/500-engineering/03-api-spec.md" }
+  - { from: "500-engineering", to: "900-security", file: "docs/500-engineering/01-contracts.md" }
+  - { from: "500-engineering", to: "900-security", file: "docs/500-engineering/03-api-spec.md" }
+  - { from: "500-engineering", to: "600-qa", file: "docs/500-engineering/02-web-spec.md" }
+  - { from: "500-engineering", to: "600-qa", file: "docs/500-engineering/03-api-spec.md" }
+  - { from: "800-infra", to: "900-security", file: "docs/800-infra/00-environments.md" }
+  - { from: "800-infra", to: "900-security", file: "docs/800-infra/01-iac-plan.md" }
+  - { from: "800-infra", to: "600-qa", file: "docs/800-infra/04-ci-cd.md" }
+  - { from: "900-security", to: "600-qa", file: "docs/900-security/02-mitigations.md" }
 
 human_gate_policy:
   # The line stops and a person decides. Record the gate, do not route around it.
