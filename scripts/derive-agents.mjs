@@ -83,6 +83,21 @@ for (const file of readdirSync(SLOT_DIR).sort()) {
   const writes = writesFor(regText, name)
   const tools = toolsFor(regText, name)
 
+  // Only slots with per-feature paths get this, so a slot that does not need the slug never sees it.
+  const slugBlock = [...reads, ...writes].some((p) => p.includes("{feature}"))
+    ? `
+## Resolve \`{feature}\` before you open or write anything
+
+Some paths below contain \`{feature}\`. That is the **run slug** — the number of the run plus the
+feature name, like \`001-photo-assessment\`. Take it from the \`**Run slug:**\` line in
+\`factory/feature.md\` and put it in every path that has \`{feature}\` in it.
+
+**Never invent it, and never write to a path that still contains the literal \`{feature}\`.** The
+number keeps the runs in order, and the folder is what stops this run overwriting an earlier one.
+If that line is missing from \`factory/feature.md\`, that is a seam: record it and stop.
+`
+    : ""
+
   // Only roles that reach the outside world get this block, so it can never be forgotten.
   const webBlock = tools.includes("Web")
     ? `
@@ -115,7 +130,7 @@ Your contract is **\`${PLUGIN}/factory/subagent-slots/${file}\`**.
 
 Read it first and follow it exactly — the decision rules, the refusals and the check condition all
 live there.
-
+${slugBlock}
 ## Read only these files
 
 ${reads.length ? reads.map((r) => `- \`${r}\``).join("\n") : "- _(none — this slot starts the line)_"}

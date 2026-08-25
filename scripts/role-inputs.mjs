@@ -13,6 +13,16 @@ const PROJECT_ROOT = process.env.CLAUDE_PROJECT_DIR ?? process.cwd()
 const MAP_PATH = join(FACTORY_ROOT, "factory/handoff-map.yaml")
 const REG_PATH = join(FACTORY_ROOT, "factory/subagent-registry.yaml")
 
+// {feature} in a path is the run slug, e.g. `001-photo-assessment`. It lives in the project's
+// factory/feature.md so one line changes every per-feature path at once.
+function runSlug() {
+  const f = join(PROJECT_ROOT, "factory/feature.md")
+  if (!existsSync(f)) return null
+  return readFileSync(f, "utf8").match(/\*\*Run slug:\*\*\s*`([^`]+)`/)?.[1] ?? null
+}
+const SLUG = runSlug()
+const resolve = (p) => (SLUG ? p.replaceAll("{feature}", SLUG) : p)
+
 const id = process.argv[2]
 if (!id) {
   console.log("no slot given. Slots, in run order:")
@@ -45,12 +55,25 @@ const present = (rel) => {
   return rel.endsWith("/") ? existsSync(p) && readdirSync(p).length > 0 : existsSync(p)
 }
 
+const needsSlug = [...reads, ...(() => [])()].some((r) => r.includes("{feature}"))
+if (SLUG) {
+  console.log(`run slug: ${SLUG}   (from factory/feature.md)\n`)
+} else if (needsSlug) {
+  console.error(
+    `This slot has per-feature paths but factory/feature.md has no \`**Run slug:** \\\`nnn-name\\\`\` line.\n` +
+      `Add one — for example: **Run slug:** \`001-photo-assessment\`\n` +
+      `Without it every {feature} path is unresolved and the role would overwrite another run's files.`,
+  )
+  process.exit(1)
+}
+
 console.log(`${id} may read ${reads.length} input(s):`)
 let missing = 0
 for (const r of reads) {
-  const ok = present(r)
+  const path = resolve(r)
+  const ok = present(path)
   if (!ok) missing += 1
-  console.log(`  ${ok ? "ok     " : "MISSING"} ${r}`)
+  console.log(`  ${ok ? "ok     " : "MISSING"} ${path}`)
 }
 
 const reg = readFileSync(REG_PATH, "utf8")
@@ -66,7 +89,10 @@ for (const line of reg.slice(at).split("\n").slice(1)) {
   writes.push(line.slice(8).trim())
 }
 console.log(`\nand writes only:`)
-for (const w of writes) console.log(`  ${w}`)
+for (const w of writes) console.log(`  ${resolve(w)}`)
+if (writes.some((w) => w.includes("{feature}")) && !SLUG) {
+  console.log(`  (unresolved — factory/feature.md has no **Run slug:** line)`)
+}
 
 console.log(
   missing === 0

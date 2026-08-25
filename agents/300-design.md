@@ -14,12 +14,22 @@ Your contract is **`${CLAUDE_PLUGIN_ROOT}/factory/subagent-slots/300-design.md`*
 Read it first and follow it exactly — the decision rules, the refusals and the check condition all
 live there.
 
+## Resolve `{feature}` before you open or write anything
+
+Some paths below contain `{feature}`. That is the **run slug** — the number of the run plus the
+feature name, like `001-photo-assessment`. Take it from the `**Run slug:**` line in
+`factory/feature.md` and put it in every path that has `{feature}` in it.
+
+**Never invent it, and never write to a path that still contains the literal `{feature}`.** The
+number keeps the runs in order, and the folder is what stops this run overwriting an earlier one.
+If that line is missing from `factory/feature.md`, that is a seam: record it and stop.
+
 ## Read only these files
 
 - `factory/feature.md`
 - `docs/100-consulting/00-context-brief.md`
-- `docs/200-product/00-prd.md`
-- `docs/200-product/01-user-stories.md`
+- `docs/200-product/{feature}/00-prd.md`
+- `docs/200-product/{feature}/01-user-stories.md`
 
 Nothing else. If something you need is missing or thin, that is a **seam**, not a prompt for help:
 record it in `factory/runs/<slug>/seam-ledger.md` and stop. Do not ask the orchestrator to fill
@@ -27,9 +37,9 @@ the gap, and do not invent the fact.
 
 ## Write only these files
 
-- `docs/300-design/00-journey-map.md`
-- `docs/300-design/01-CONTEXT.md`
-- `docs/300-design/02-SPEC.md`
+- `docs/300-design/{feature}/00-journey-map.md`
+- `docs/300-design/{feature}/01-CONTEXT.md`
+- `docs/300-design/{feature}/02-SPEC.md`
 - `docs/300-design/03-tokens.md`
 
 You are the single writer of these. Writing anywhere else breaks the line.

@@ -14,6 +14,16 @@ Your contract is **`${CLAUDE_PLUGIN_ROOT}/factory/subagent-slots/200-product.md`
 Read it first and follow it exactly — the decision rules, the refusals and the check condition all
 live there.
 
+## Resolve `{feature}` before you open or write anything
+
+Some paths below contain `{feature}`. That is the **run slug** — the number of the run plus the
+feature name, like `001-photo-assessment`. Take it from the `**Run slug:**` line in
+`factory/feature.md` and put it in every path that has `{feature}` in it.
+
+**Never invent it, and never write to a path that still contains the literal `{feature}`.** The
+number keeps the runs in order, and the folder is what stops this run overwriting an earlier one.
+If that line is missing from `factory/feature.md`, that is a seam: record it and stop.
+
 ## Read only these files
 
 - `factory/feature.md`
@@ -27,9 +37,9 @@ the gap, and do not invent the fact.
 
 ## Write only these files
 
-- `docs/200-product/00-prd.md`
-- `docs/200-product/01-user-stories.md`
-- `docs/200-product/02-traceability.md`
+- `docs/200-product/{feature}/00-prd.md`
+- `docs/200-product/{feature}/01-user-stories.md`
+- `docs/200-product/{feature}/02-traceability.md`
 
 You are the single writer of these. Writing anywhere else breaks the line.
 

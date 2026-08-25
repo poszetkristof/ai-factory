@@ -110,7 +110,26 @@ for (const id of ids) {
   }
 }
 
-// 5 — every declared edge is real in both directions
+// 5 — a slot with {feature} in any of its paths must be able to resolve it, so it has to be given
+// factory/feature.md. Without this the role writes a literal "{feature}" folder, or guesses.
+for (const id of ids) {
+  const writes = listUnder(blockFor(reg, `- id: "${id}"`), "writes", 4)
+  const anchor = map.indexOf(`\n  "${id}":`)
+  const reads = []
+  if (anchor !== -1) {
+    for (const line of map.slice(anchor + 1).split("\n").slice(1)) {
+      if (line.trim() === "" || line.trim().startsWith("#")) continue
+      if (!line.startsWith("    - ")) break
+      reads.push(line.slice(6).trim())
+    }
+  }
+  const usesSlug = [...writes, ...reads].some((p) => p.includes("{feature}"))
+  if (usesSlug && !reads.includes("factory/feature.md")) {
+    note(`"${id}" has {feature} paths but does not read factory/feature.md, so it cannot resolve the slug`)
+  }
+}
+
+// 6 — every declared edge is real in both directions
 for (const m of map.matchAll(/- \{ from: "(.+?)", to: "(.+?)", file: (.+?) \}/g)) {
   const [, from, to, file] = m
   if (produced(file) !== from) note(`edge ${from} → ${to}: "${file}" is written by ${produced(file) ?? "nobody"}`)
