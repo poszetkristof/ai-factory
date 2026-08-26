@@ -60,11 +60,19 @@ reads:
   "500-engineering":
     # Needed for the run slug: this role writes flat files but reads per-feature ones.
     - factory/feature.md
+    # 00-prd.md holds the closed lists — the verdict codes live in its section 5.2, and this role
+    # writes them into the contracts package. Added 2026-08-26: without it the role correctly
+    # refused to invent eight codes and left the contract unfinished.
+    - "docs/200-product/{feature}/00-prd.md"
     - "docs/200-product/{feature}/01-user-stories.md"
     - "docs/300-design/{feature}/02-SPEC.md"
     - docs/300-design/03-tokens.md
     - docs/400-architecture/00-options.md
     - docs/400-architecture/02-containers.mmd
+    # 05-patterns.md is named by four ADRs as the authority for the key shapes, the cookie
+    # attributes, the answer schema and the failure names. A role that must obey those ADRs has to
+    # be able to read the file they point at. Added 2026-08-26.
+    - docs/400-architecture/05-patterns.md
     - docs/400-architecture/06-nfrs.md
     - docs/ADR/
 
@@ -79,7 +87,14 @@ reads:
     # Needed for the run slug: this role writes flat files but reads the feature's timed flow.
     - factory/feature.md
     - docs/400-architecture/02-containers.mmd
+    # 05-patterns.md holds the cookie attributes, the key design and the permission shape. That is
+    # this role's whole surface. Added 2026-08-26.
+    - docs/400-architecture/05-patterns.md
     - "docs/400-architecture/{feature}/03-flow.md"
+    # This role's own contract says "check the sign-in ADR against current guidance and say whether
+    # it still holds". It could not read a single ADR. Added 2026-08-26 — the sharpest wiring bug
+    # found on run 1, because the instruction and the inputs contradicted each other.
+    - docs/ADR/
     - docs/500-engineering/01-contracts.md
     - docs/500-engineering/03-api-spec.md
     - docs/800-infra/00-environments.md
@@ -88,9 +103,15 @@ reads:
   "600-qa":
     # Needed for the run slug, because every file this role writes is per-feature.
     - factory/feature.md
+    # This role's contract asks for "a golden set with expected verdicts". The verdict codes are a
+    # closed list in 00-prd.md section 5.2. Added 2026-08-26 — it was asked for a golden set of
+    # values it could not read.
+    - "docs/200-product/{feature}/00-prd.md"
     - "docs/200-product/{feature}/01-user-stories.md"
     - "docs/300-design/{feature}/02-SPEC.md"
     - docs/400-architecture/06-nfrs.md
+    # The schemas and the failure codes a test case asserts against. Added 2026-08-26.
+    - docs/500-engineering/01-contracts.md
     - docs/500-engineering/02-web-spec.md
     - docs/500-engineering/03-api-spec.md
     - docs/800-infra/04-ci-cd.md
@@ -108,7 +129,9 @@ edges:
   - { from: "200-product", to: "300-design", file: "docs/200-product/{feature}/01-user-stories.md" }
   - { from: "200-product", to: "400-architecture", file: "docs/200-product/{feature}/00-prd.md" }
   - { from: "200-product", to: "400-architecture", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "200-product", to: "500-engineering", file: "docs/200-product/{feature}/00-prd.md" }
   - { from: "200-product", to: "500-engineering", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "200-product", to: "600-qa", file: "docs/200-product/{feature}/00-prd.md" }
   - { from: "200-product", to: "600-qa", file: "docs/200-product/{feature}/01-user-stories.md" }
   - { from: "300-design", to: "400-architecture", file: "docs/300-design/{feature}/01-CONTEXT.md" }
   - { from: "300-design", to: "400-architecture", file: "docs/300-design/{feature}/02-SPEC.md" }
@@ -117,16 +140,19 @@ edges:
   - { from: "300-design", to: "600-qa", file: "docs/300-design/{feature}/02-SPEC.md" }
   - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/00-options.md" }
   - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/02-containers.mmd" }
+  - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/05-patterns.md" }
   - { from: "400-architecture", to: "500-engineering", file: "docs/400-architecture/06-nfrs.md" }
   - { from: "400-architecture", to: "800-infra", file: "docs/400-architecture/00-options.md" }
   - { from: "400-architecture", to: "800-infra", file: "docs/400-architecture/02-containers.mmd" }
   - { from: "400-architecture", to: "800-infra", file: "docs/400-architecture/06-nfrs.md" }
   - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/02-containers.mmd" }
+  - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/05-patterns.md" }
   - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/{feature}/03-flow.md" }
   - { from: "400-architecture", to: "600-qa", file: "docs/400-architecture/06-nfrs.md" }
   - { from: "500-engineering", to: "800-infra", file: "docs/500-engineering/03-api-spec.md" }
   - { from: "500-engineering", to: "900-security", file: "docs/500-engineering/01-contracts.md" }
   - { from: "500-engineering", to: "900-security", file: "docs/500-engineering/03-api-spec.md" }
+  - { from: "500-engineering", to: "600-qa", file: "docs/500-engineering/01-contracts.md" }
   - { from: "500-engineering", to: "600-qa", file: "docs/500-engineering/02-web-spec.md" }
   - { from: "500-engineering", to: "600-qa", file: "docs/500-engineering/03-api-spec.md" }
   - { from: "800-infra", to: "900-security", file: "docs/800-infra/00-environments.md" }

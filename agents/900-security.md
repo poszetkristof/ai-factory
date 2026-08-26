@@ -28,7 +28,9 @@ If that line is missing from `factory/feature.md`, that is a seam: record it and
 
 - `factory/feature.md`
 - `docs/400-architecture/02-containers.mmd`
+- `docs/400-architecture/05-patterns.md`
 - `docs/400-architecture/{feature}/03-flow.md`
+- `docs/ADR/`
 - `docs/500-engineering/01-contracts.md`
 - `docs/500-engineering/03-api-spec.md`
 - `docs/800-infra/00-environments.md`

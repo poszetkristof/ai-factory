@@ -27,11 +27,13 @@ If that line is missing from `factory/feature.md`, that is a seam: record it and
 ## Read only these files
 
 - `factory/feature.md`
+- `docs/200-product/{feature}/00-prd.md`
 - `docs/200-product/{feature}/01-user-stories.md`
 - `docs/300-design/{feature}/02-SPEC.md`
 - `docs/300-design/03-tokens.md`
 - `docs/400-architecture/00-options.md`
 - `docs/400-architecture/02-containers.mmd`
+- `docs/400-architecture/05-patterns.md`
 - `docs/400-architecture/06-nfrs.md`
 - `docs/ADR/`
 

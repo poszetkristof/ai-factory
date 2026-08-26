@@ -9,8 +9,9 @@ description: Turn a chosen architecture and design handoff into the specs a buil
 guess, and a reviewer who was not in the session can tell whether the result is correct.
 
 **Inputs & outputs.**
-In: `docs/200-product/01-user-stories.md`, `docs/300-design/02-SPEC.md`, `03-tokens.md`,
-`docs/400-architecture/00-options.md`, `02-containers.mmd`, `06-nfrs.md`, `docs/ADR/`.
+In: **the `reads:` block for this slot in `factory/handoff-map.yaml`, and nothing else.** It is
+not restated here on purpose. This list used to be written out twice, the two copies drifted apart
+after the per-feature folder refactor, and a role was handed paths that no longer existed.
 Out: `docs/500-engineering/00-conventions.md`, `01-contracts.md`, `02-web-spec.md`,
 `03-api-spec.md`, `docs/context/stack.md`.
 

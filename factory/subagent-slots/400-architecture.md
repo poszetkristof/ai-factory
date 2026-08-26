@@ -9,8 +9,9 @@ description: Turn a PRD and design handoff into three scored options, a chosen d
 decisions and numbers a build can run against.
 
 **Inputs & outputs.**
-In: `factory/feature.md`, `docs/100-consulting/00-context-brief.md`, `docs/200-product/00-prd.md`,
-`docs/200-product/01-user-stories.md`, `docs/300-design/01-CONTEXT.md`, `02-SPEC.md`.
+In: **the `reads:` block for this slot in `factory/handoff-map.yaml`, and nothing else.** It is
+not restated here on purpose. This list used to be written out twice, the two copies drifted apart
+after the per-feature folder refactor, and a role was handed paths that no longer existed.
 Out: `docs/400-architecture/00-options.md`, `01-context.mmd`,
 `02-containers.mmd`, `03-flow-plant-check.md`, `05-patterns.md`, `06-nfrs.md`,
 `07-adversarial.md`, and `docs/ADR/00NN-*.md`.

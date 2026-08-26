@@ -8,8 +8,9 @@ description: Turn a context brief, ranked use cases and a market scan into user 
 **Goal.** Make every requirement something a person could look at and say pass or fail.
 
 **Inputs & outputs.**
-In: `factory/feature.md`, `docs/100-consulting/00-context-brief.md`,
-`docs/100-consulting/01-use-cases.md`, `docs/100-consulting/03-market.md`.
+In: **the `reads:` block for this slot in `factory/handoff-map.yaml`, and nothing else.** It is
+not restated here on purpose. This list used to be written out twice, the two copies drifted apart
+after the per-feature folder refactor, and a role was handed paths that no longer existed.
 Out: `docs/200-product/01-user-stories.md` (US-01…US-NN, JTBD-shaped, Given/When/Then ACs),
 `docs/200-product/00-prd.md` (one page), `docs/200-product/02-traceability.md` (story → outcome
 metric → later, epic).
