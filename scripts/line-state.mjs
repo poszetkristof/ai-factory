@@ -15,6 +15,13 @@ const inProject = (p) => existsSync(join(PROJECT_ROOT, p))
 const map = readFileSync(join(FACTORY_ROOT, "factory/handoff-map.yaml"), "utf8")
 const reg = readFileSync(join(FACTORY_ROOT, "factory/subagent-registry.yaml"), "utf8")
 
+// Per-feature outputs live under the run slug. Without this every such role reads as not done,
+// and /start names a role that already ran as the next one.
+const SLUG = existsSync(join(PROJECT_ROOT, "factory/feature.md"))
+  ? (readFileSync(join(PROJECT_ROOT, "factory/feature.md"), "utf8").match(/\*\*Run slug:\*\*\s*`([^`]+)`/)?.[1] ?? null)
+  : null
+const resolve = (p) => (SLUG ? p.replaceAll("{feature}", SLUG) : p)
+
 /** `- item` lines directly under `key:`, stopping at the first line that is not one. */
 function listUnder(text, key, indent) {
   const pad = " ".repeat(indent)
@@ -36,7 +43,7 @@ let nextRole = null
 for (const id of order) {
   const at = reg.indexOf(`- id: "${id}"`)
   const writes = listUnder(reg.slice(at), "writes", 4).filter((p) => !p.includes("*"))
-  const done = writes.length > 0 && writes.every((p) => inProject(p))
+  const done = writes.length > 0 && writes.every((p) => inProject(resolve(p)))
   if (!done && nextRole === null) nextRole = id
   console.log(`  ${done ? "[x]" : "[ ]"} ${id}`)
 }

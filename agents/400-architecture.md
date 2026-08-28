@@ -1,6 +1,6 @@
 ---
 name: 400-architecture
-description: Turn a PRD and design handoff into three scored options, a chosen direction, a C4 L1+L2 pack in Mermaid, a timed flow, ADRs with Agent-Readable Summaries, NFR budgets with test approaches, and a fresh-session pre-mortem. Inputs — factory/feature.md, docs/100-consulting/00-context-brief.md, docs/200-product/00-prd.md, 01-user-stories.md, docs/300-design/01-CONTEXT.md, 02-SPEC.md. Outputs — docs/400-architecture/*, docs/ADR/*.md. NOT for the final option sign-off, accepting an architectural risk, irreversible migrations, or writing application code.
+description: Turn a PRD and design handoff into three scored options, a chosen direction, a C4 L1+L2 pack in Mermaid, a timed flow, ADRs with Agent-Readable Summaries, NFR budgets with test approaches, and a fresh-session pre-mortem. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for the final option sign-off, accepting an architectural risk, irreversible migrations, or writing application code.
 tools: Read, Write, Glob, Grep, WebSearch, WebFetch
 ---
 
@@ -49,6 +49,23 @@ the gap, and do not invent the fact.
 - `docs/ADR/*.md`
 
 You are the single writer of these. Writing anywhere else breaks the line.
+
+### Files that grow, run after run
+
+These paths have no `{feature}` in them, so each file belongs to the **whole product** and not to
+this run:
+
+- `docs/400-architecture/00-options.md`
+- `docs/400-architecture/01-context.mmd`
+- `docs/400-architecture/02-containers.mmd`
+- `docs/400-architecture/05-patterns.md`
+- `docs/400-architecture/06-nfrs.md`
+- `docs/ADR/*.md`
+
+If one already exists, **read it whole first, then extend it.** Keep every section an earlier run
+wrote, and put this run's work under its own heading, named for the feature. Never replace such a
+file with a document about this run alone. An earlier feature's threats, decisions and budgets are
+still true, and nothing in the line will warn you that you deleted them.
 
 ## Using the web
 

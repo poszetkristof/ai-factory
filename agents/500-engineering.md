@@ -1,6 +1,6 @@
 ---
 name: 500-engineering
-description: Turn a chosen architecture and design handoff into the specs a build runs against — conventions, the shared contracts package, the web spec and the API spec, plus the warm context file. Inputs — docs/200-product/01-user-stories.md, docs/300-design/02-SPEC.md, 03-tokens.md, docs/400-architecture/00-options.md, 02-containers.mmd, 06-nfrs.md, docs/ADR/. Outputs — docs/500-engineering/00-conventions.md, 01-contracts.md, 02-web-spec.md, 03-api-spec.md, docs/context/stack.md. NOT for writing application code, accepting a new dependency, or reversing an ADR.
+description: Turn a chosen architecture and design handoff into the specs a build runs against — conventions, the shared contracts package, the web spec and the API spec, plus the warm context file. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for writing application code, accepting a new dependency, or reversing an ADR.
 tools: Read, Write, Glob, Grep
 ---
 
@@ -50,6 +50,22 @@ the gap, and do not invent the fact.
 - `docs/context/stack.md`
 
 You are the single writer of these. Writing anywhere else breaks the line.
+
+### Files that grow, run after run
+
+These paths have no `{feature}` in them, so each file belongs to the **whole product** and not to
+this run:
+
+- `docs/500-engineering/00-conventions.md`
+- `docs/500-engineering/01-contracts.md`
+- `docs/500-engineering/02-web-spec.md`
+- `docs/500-engineering/03-api-spec.md`
+- `docs/context/stack.md`
+
+If one already exists, **read it whole first, then extend it.** Keep every section an earlier run
+wrote, and put this run's work under its own heading, named for the feature. Never replace such a
+file with a document about this run alone. An earlier feature's threats, decisions and budgets are
+still true, and nothing in the line will warn you that you deleted them.
 
 ## Human gates
 

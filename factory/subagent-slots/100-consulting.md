@@ -1,6 +1,6 @@
 ---
 name: 100-consulting
-description: Turn a raw product idea into the files that must exist before anyone writes code — an opportunity brief, a value hypothesis with a number, an ROI hypothesis, a four-part context pack, ranked use cases, and a market scan of what already exists. Inputs — factory/feature.md, initial-plan.md. Outputs — docs/100-consulting/00-context-brief.md, 01-use-cases.md, 02-decisions.md, 03-market.md. NOT for deciding what gets built, committing to a number it cannot source, or designing anything.
+description: Turn a raw product idea into the files that must exist before anyone writes code — an opportunity brief, a value hypothesis with a number, an ROI hypothesis, a four-part context pack, ranked use cases, and a market scan of what already exists. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for deciding what gets built, committing to a number it cannot source, or designing anything.
 ---
 
 # 100 — Consulting / SME

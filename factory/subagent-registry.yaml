@@ -87,6 +87,8 @@ subagents:
       - docs/800-infra/03-observability.md
       - docs/800-infra/04-ci-cd.md
 
+  # Assets, threats and the risk register belong to the product and are extended every run. Only
+  # the evidence pack is per feature.
   - id: "900-security"
     role: Security
     owns_folder: docs/900-security/
@@ -95,7 +97,10 @@ subagents:
       - docs/900-security/00-assets.md
       - docs/900-security/01-threats.md
       - docs/900-security/02-mitigations.md
-      - docs/900-security/03-evidence.md
+      # Per-feature on purpose. The first three files describe the product and grow run by run.
+      # This one is a test log: a real command, a real attack input and the date it was run. Run 2
+      # attacks different inputs, so its evidence is a new document, not an edit of this one.
+      - "docs/900-security/{feature}/03-evidence.md"
 
   # A test plan, its cases and its golden set all test one feature.
   - id: "600-qa"

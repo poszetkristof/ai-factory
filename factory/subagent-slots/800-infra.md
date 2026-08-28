@@ -1,6 +1,6 @@
 ---
 name: 800-infra
-description: Turn a chosen architecture into an environment plan, an IaC plan, cost guardrails against the AWS free account, an observability plan and a CI/CD plan. Inputs — docs/400-architecture/00-options.md, 02-containers.mmd, 06-nfrs.md, docs/500-engineering/03-api-spec.md, docs/ADR/. Outputs — docs/800-infra/00-environments.md, 01-iac-plan.md, 02-cost-guardrails.md, 03-observability.md, 04-ci-cd.md. NOT for spending money, deploying anything, or owning the kill-switch.
+description: Turn a chosen architecture into an environment plan, an IaC plan, cost guardrails against the AWS free account, an observability plan and a CI/CD plan. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for spending money, deploying anything, or owning the kill-switch.
 ---
 
 # 800 — Infrastructure / Ops

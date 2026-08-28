@@ -1,6 +1,6 @@
 ---
 name: 300-design
-description: Turn a PRD and user stories into a mobile-first, build-ready design handoff — a journey map, CONTEXT.md, SPEC.md with every screen state, and named design tokens. Inputs — factory/feature.md, docs/100-consulting/00-context-brief.md, docs/200-product/00-prd.md, 01-user-stories.md. Outputs — docs/300-design/00-journey-map.md, 01-CONTEXT.md, 02-SPEC.md, 03-tokens.md. NOT for deciding brand voice, lived-experience accessibility calls, or whether AI belongs in a feature.
+description: Turn a PRD and user stories into a mobile-first, build-ready design handoff — a journey map, CONTEXT.md, SPEC.md with every screen state, and named design tokens. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for deciding brand voice, lived-experience accessibility calls, or whether AI belongs in a feature.
 ---
 
 # 300 — Product Design

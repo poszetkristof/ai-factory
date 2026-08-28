@@ -1,6 +1,6 @@
 ---
 name: 900-security
-description: Turn the container diagram, the API spec and the infra plan into an asset list, a STRIDE plus OWASP-LLM threat model, a ranked risk register with three fix types each, and an evidence pack. Inputs — docs/400-architecture/02-containers.mmd, 03-flow-plant-check.md, docs/500-engineering/01-contracts.md, 03-api-spec.md, docs/800-infra/00-environments.md, 01-iac-plan.md. Outputs — docs/900-security/00-assets.md, 01-threats.md, 02-mitigations.md, 03-evidence.md. NOT for signing off a residual risk, deciding what counts as personal data, or accepting a compliance position.
+description: Turn the container diagram, the API spec and the infra plan into an asset list, a STRIDE plus OWASP-LLM threat model, a ranked risk register with three fix types each, and an evidence pack. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for signing off a residual risk, deciding what counts as personal data, or accepting a compliance position.
 tools: Read, Write, Glob, Grep, WebSearch, WebFetch
 ---
 
@@ -45,9 +45,23 @@ the gap, and do not invent the fact.
 - `docs/900-security/00-assets.md`
 - `docs/900-security/01-threats.md`
 - `docs/900-security/02-mitigations.md`
-- `docs/900-security/03-evidence.md`
+- `docs/900-security/{feature}/03-evidence.md`
 
 You are the single writer of these. Writing anywhere else breaks the line.
+
+### Files that grow, run after run
+
+These paths have no `{feature}` in them, so each file belongs to the **whole product** and not to
+this run:
+
+- `docs/900-security/00-assets.md`
+- `docs/900-security/01-threats.md`
+- `docs/900-security/02-mitigations.md`
+
+If one already exists, **read it whole first, then extend it.** Keep every section an earlier run
+wrote, and put this run's work under its own heading, named for the feature. Never replace such a
+file with a document about this run alone. An earlier feature's threats, decisions and budgets are
+still true, and nothing in the line will warn you that you deleted them.
 
 ## Using the web
 

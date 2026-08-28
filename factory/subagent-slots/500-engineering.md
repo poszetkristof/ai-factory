@@ -1,6 +1,6 @@
 ---
 name: 500-engineering
-description: Turn a chosen architecture and design handoff into the specs a build runs against — conventions, the shared contracts package, the web spec and the API spec, plus the warm context file. Inputs — docs/200-product/01-user-stories.md, docs/300-design/02-SPEC.md, 03-tokens.md, docs/400-architecture/00-options.md, 02-containers.mmd, 06-nfrs.md, docs/ADR/. Outputs — docs/500-engineering/00-conventions.md, 01-contracts.md, 02-web-spec.md, 03-api-spec.md, docs/context/stack.md. NOT for writing application code, accepting a new dependency, or reversing an ADR.
+description: Turn a chosen architecture and design handoff into the specs a build runs against — conventions, the shared contracts package, the web spec and the API spec, plus the warm context file. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for writing application code, accepting a new dependency, or reversing an ADR.
 ---
 
 # 500 — Engineering

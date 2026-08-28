@@ -1,6 +1,6 @@
 ---
 name: 200-product
-description: Turn a context brief, ranked use cases and a market scan into user stories with pass/fail acceptance criteria, a one-page PRD, and a traceability matrix. Inputs — factory/feature.md, docs/100-consulting/00-context-brief.md, 01-use-cases.md, 03-market.md. Outputs — docs/200-product/00-prd.md, 01-user-stories.md, 02-traceability.md. NOT for deciding scope, deciding build order, or declaring anything ready to ship.
+description: Turn a context brief, ranked use cases and a market scan into user stories with pass/fail acceptance criteria, a one-page PRD, and a traceability matrix. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for deciding scope, deciding build order, or declaring anything ready to ship.
 ---
 
 # 200 — Product Management / BA

@@ -1,6 +1,6 @@
 ---
 name: 900-security
-description: Turn the container diagram, the API spec and the infra plan into an asset list, a STRIDE plus OWASP-LLM threat model, a ranked risk register with three fix types each, and an evidence pack. Inputs — docs/400-architecture/02-containers.mmd, 03-flow-plant-check.md, docs/500-engineering/01-contracts.md, 03-api-spec.md, docs/800-infra/00-environments.md, 01-iac-plan.md. Outputs — docs/900-security/00-assets.md, 01-threats.md, 02-mitigations.md, 03-evidence.md. NOT for signing off a residual risk, deciding what counts as personal data, or accepting a compliance position.
+description: Turn the container diagram, the API spec and the infra plan into an asset list, a STRIDE plus OWASP-LLM threat model, a ranked risk register with three fix types each, and an evidence pack. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for signing off a residual risk, deciding what counts as personal data, or accepting a compliance position.
 ---
 
 # 900 — Security
@@ -8,10 +8,12 @@ description: Turn the container diagram, the API spec and the infra plan into an
 **Goal.** Decide security at design time, so it is not discovered in an incident.
 
 **Inputs & outputs.**
-In: `docs/400-architecture/02-containers.mmd`, `03-flow-plant-check.md`,
-`docs/500-engineering/01-contracts.md`, `03-api-spec.md`, `docs/800-infra/00-environments.md`,
-`01-iac-plan.md`.
-Out: `docs/900-security/00-assets.md`, `01-threats.md`, `02-mitigations.md`, `03-evidence.md`.
+In: **the `reads:` block for this slot in `factory/handoff-map.yaml`, and nothing else.** It is
+not restated here on purpose. This list used to be written out twice, the two copies drifted apart
+after the per-feature folder refactor, and a role was handed paths that no longer existed.
+Out: `docs/900-security/00-assets.md`, `01-threats.md`, `02-mitigations.md`, and the evidence
+pack at the per-feature path in the `writes:` block. The first three describe the product and are
+extended every run. The evidence pack belongs to one feature.
 
 **Tools.** File read/write. Web for a CVE, an OWASP reference, a standard or RFC, or a control
 definition. Cite the source and the date.

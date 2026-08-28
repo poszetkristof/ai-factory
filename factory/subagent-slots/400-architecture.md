@@ -1,6 +1,6 @@
 ---
 name: 400-architecture
-description: Turn a PRD and design handoff into three scored options, a chosen direction, a C4 L1+L2 pack in Mermaid, a timed flow, ADRs with Agent-Readable Summaries, NFR budgets with test approaches, and a fresh-session pre-mortem. Inputs — factory/feature.md, docs/100-consulting/00-context-brief.md, docs/200-product/00-prd.md, 01-user-stories.md, docs/300-design/01-CONTEXT.md, 02-SPEC.md. Outputs — docs/400-architecture/*, docs/ADR/*.md. NOT for the final option sign-off, accepting an architectural risk, irreversible migrations, or writing application code.
+description: Turn a PRD and design handoff into three scored options, a chosen direction, a C4 L1+L2 pack in Mermaid, a timed flow, ADRs with Agent-Readable Summaries, NFR budgets with test approaches, and a fresh-session pre-mortem. Inputs and outputs are the `reads` and `writes` blocks for this slot, not restated here. NOT for the final option sign-off, accepting an architectural risk, irreversible migrations, or writing application code.
 ---
 
 # 400 — Architecture

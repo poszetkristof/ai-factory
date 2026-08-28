@@ -79,6 +79,15 @@ for (const file of readdirSync(SLOT_DIR).sort()) {
   const description = fm[1].match(/^description:\s*([\s\S]*?)(?=\n\w+:|$)/m)?.[1].trim()
   if (!name || !description) throw new Error(`${file}: name or description missing`)
 
+  // A colon followed by a space ends the key in a YAML plain scalar. One inside the description
+  // breaks the frontmatter of every adapter derived from it, so fail here instead of shipping it.
+  if (description.includes(": ")) {
+    throw new Error(
+      `${file}: the description contains ": ", which ends a YAML key. Write \`reads\` in backticks, ` +
+        `or reword. The adapter frontmatter will not parse otherwise.`,
+    )
+  }
+
   const reads = readsFor(mapText, name)
   const writes = writesFor(regText, name)
   const tools = toolsFor(regText, name)
@@ -112,6 +121,26 @@ you could not verify is labelled unverified. Never present a price, a user count
 because one page said so.
 `
     : ""
+
+  // A flat write path belongs to the product and grows run by run. That rule lived only in the
+  // registry comments, which no role reads, so run 2 would have replaced run 1's file with no warning.
+  const flatWrites = writes.filter((w) => !w.includes("{feature}"))
+  const extendBlock = flatWrites.length
+    ? `
+### Files that grow, run after run
+
+These paths have no \`{feature}\` in them, so each file belongs to the **whole product** and not to
+this run:
+
+${flatWrites.map((w) => `- \`${w}\``).join("\n")}
+
+If one already exists, **read it whole first, then extend it.** Keep every section an earlier run
+wrote, and put this run's work under its own heading, named for the feature. Never replace such a
+file with a document about this run alone. An earlier feature's threats, decisions and budgets are
+still true, and nothing in the line will warn you that you deleted them.
+`
+    : ""
+
   if (writes.length === 0) throw new Error(`${name}: not in subagent-registry.yaml`)
   if (!order.includes(name)) throw new Error(`${name}: not in execution_order`)
 
@@ -144,7 +173,7 @@ the gap, and do not invent the fact.
 ${writes.map((w) => `- \`${w}\``).join("\n")}
 
 You are the single writer of these. Writing anywhere else breaks the line.
-${webBlock}
+${extendBlock}${webBlock}
 ## Human gates
 
 Stop and record a gate whenever \`human_gate_policy.stop_when\` in
