@@ -108,14 +108,27 @@ reads:
     # values it could not read.
     - "docs/200-product/{feature}/00-prd.md"
     - "docs/200-product/{feature}/01-user-stories.md"
+    # 06-nfrs.md points at metric ids "M-nn" in its last column and names 02-traceability.md as
+    # where they live. Without it, every M-nn this role reads is a pointer it cannot follow.
+    - "docs/200-product/{feature}/02-traceability.md"
     - "docs/300-design/{feature}/02-SPEC.md"
     - docs/400-architecture/06-nfrs.md
+    # NFR-01 and NFR-07 are timing budgets. This file is where the milliseconds were spent, and it
+    # marks which of them are guesses. A perf test written without it asserts a number with no source.
+    - "docs/400-architecture/{feature}/03-flow.md"
     # The schemas and the failure codes a test case asserts against. Added 2026-08-26.
     - docs/500-engineering/01-contracts.md
     - docs/500-engineering/02-web-spec.md
     - docs/500-engineering/03-api-spec.md
     - docs/800-infra/04-ci-cd.md
+    # 02-mitigations.md references threats by id throughout. This is what those ids mean.
+    - docs/900-security/01-threats.md
     - docs/900-security/02-mitigations.md
+    # The largest single input this role has. 36 checks, each with the exact command, the real input,
+    # what counts as a pass and what counts as a fail. Its own header says "Read next by 600 QA" and
+    # the map did not give it. Without it this role writes test cases that duplicate or contradict
+    # checks that already exist.
+    - "docs/900-security/{feature}/03-evidence.md"
 
 # Named edges. One line per file crossing from one subagent to the next. This is the list the seam
 # review walks: each edge is marked clean / under-supply / over-supply / missing / routing.
@@ -133,6 +146,7 @@ edges:
   - { from: "200-product", to: "500-engineering", file: "docs/200-product/{feature}/01-user-stories.md" }
   - { from: "200-product", to: "600-qa", file: "docs/200-product/{feature}/00-prd.md" }
   - { from: "200-product", to: "600-qa", file: "docs/200-product/{feature}/01-user-stories.md" }
+  - { from: "200-product", to: "600-qa", file: "docs/200-product/{feature}/02-traceability.md" }
   - { from: "300-design", to: "400-architecture", file: "docs/300-design/{feature}/01-CONTEXT.md" }
   - { from: "300-design", to: "400-architecture", file: "docs/300-design/{feature}/02-SPEC.md" }
   - { from: "300-design", to: "500-engineering", file: "docs/300-design/{feature}/02-SPEC.md" }
@@ -149,6 +163,7 @@ edges:
   - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/05-patterns.md" }
   - { from: "400-architecture", to: "900-security", file: "docs/400-architecture/{feature}/03-flow.md" }
   - { from: "400-architecture", to: "600-qa", file: "docs/400-architecture/06-nfrs.md" }
+  - { from: "400-architecture", to: "600-qa", file: "docs/400-architecture/{feature}/03-flow.md" }
   - { from: "500-engineering", to: "800-infra", file: "docs/500-engineering/03-api-spec.md" }
   - { from: "500-engineering", to: "900-security", file: "docs/500-engineering/01-contracts.md" }
   - { from: "500-engineering", to: "900-security", file: "docs/500-engineering/03-api-spec.md" }
@@ -158,7 +173,9 @@ edges:
   - { from: "800-infra", to: "900-security", file: "docs/800-infra/00-environments.md" }
   - { from: "800-infra", to: "900-security", file: "docs/800-infra/01-iac-plan.md" }
   - { from: "800-infra", to: "600-qa", file: "docs/800-infra/04-ci-cd.md" }
+  - { from: "900-security", to: "600-qa", file: "docs/900-security/01-threats.md" }
   - { from: "900-security", to: "600-qa", file: "docs/900-security/02-mitigations.md" }
+  - { from: "900-security", to: "600-qa", file: "docs/900-security/{feature}/03-evidence.md" }
 
 human_gate_policy:
   # The line stops and a person decides. Record the gate, do not route around it.
